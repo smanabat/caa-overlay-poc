@@ -14,7 +14,6 @@
 ## Questions 
 - what is `Also include as attachment for InfoEx Submission` ?
 
-
 ## Editable fields
 - avalanche 
   - Border color / pattern 
