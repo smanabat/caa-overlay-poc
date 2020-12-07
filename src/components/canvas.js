@@ -99,6 +99,8 @@ export default () => {
 
     const selectRegion = useStore(s => s.selectRegion);
 
+    const [editId, setEditId] = useState('')
+
     React.useEffect(() => {
         function checkSize() {
             const container = document.querySelector('.right-panel');
@@ -183,10 +185,23 @@ export default () => {
         }
     };
 
+    let pointLabelToEdit = pointLabel.find(x => x.star.id == editId);
+    const editText = pointLabelToEdit?.label.text
+
+    const setEdit = (id) => {
+        setEditId(id)
+    }
+    const changeText = (e) => {
+        let pointLabelToEdit = pointLabel.find(x => x.star.id == editId);
+        pointLabelToEdit.label.text = e.target.value
+        let updatedLabels = [...pointLabel];
+        setPointLabels(updatedLabels)
+    }
 
     return (
         <React.Fragment>
             <h1>{mode}</h1>
+            <input type={"Text"} value={editText} onChange={changeText}/>
             <div onClick={() => setMode(MODES.ADD_AVALANCHE)}>
                 Add avalanche
             </div>
@@ -230,7 +245,7 @@ export default () => {
                 <Regions/>
 
                 {/*points*/}
-                <PointLabels/>
+                <PointLabels setEdit={setEdit}/>
             </Stage>
             <div className="zoom-container">
                 <button
