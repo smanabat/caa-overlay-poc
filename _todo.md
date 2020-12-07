@@ -6,9 +6,9 @@
 - [X] Work on mobile
 - [X] Zoom
 - [X] Edit
+- [X] save to db (save as json and reimport to view)
 - [ ] Draw a ski cut
 - [ ] Free-form draw
-- [ ] save to db
 - [ ] Add a note
 
 ## Questions 

@@ -198,6 +198,7 @@ export default () => {
         setPointLabels(updatedLabels)
     }
 
+
     return (
         <React.Fragment>
             <h1>{mode}</h1>
