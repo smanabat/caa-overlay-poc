@@ -38,8 +38,11 @@ export default () => {
                             // fill={region.color}
                             fillPatternImage={image}
                             closed
-                            opacity={isSelected ? .5 : 0.2}
+                            opacity={isSelected ? .8 : 0.5}
+                            tension={1}
                             draggable
+                            stroke="#df4b26"
+                            strokeWidth={15}
                             onClick={() => {
                                 selectRegion(region.id);
                             }}

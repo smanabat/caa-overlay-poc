@@ -3,7 +3,7 @@ import {Group, Layer, Line, Stage, Star, Text} from "react-konva";
 
 import useStore from "../store";
 
-export const SkiCuts = ({setEdit}) => {
+export const SkiCuts = ({setEditNumber}) => {
     const skiCuts = useStore(s => s.skiCuts);
     const setSkiCuts = useStore(s => s.setSkiCuts);
 
@@ -15,10 +15,12 @@ export const SkiCuts = ({setEdit}) => {
                     key={i}
                     points={line.points}
                     stroke="#df4b26"
-                    strokeWidth={5}
-                    tension={0.5}
+                    strokeWidth={line.strokeWidth}
+                    // tension={0.5}
+                    bezier
                     lineCap="round"
                     globalCompositeOperation={'source-over'}
+                    onClick={(e) =>  setEditNumber(skiCut.id)}
                 />
             })}
         </Layer>

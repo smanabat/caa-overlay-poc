@@ -106,6 +106,7 @@ export default () => {
     const selectRegion = useStore(s => s.selectRegion);
 
     const [editId, setEditId] = useState('')
+    const [editNumberId, setEditNumberId] = useState('')
 
     React.useEffect(() => {
         function checkSize() {
@@ -166,7 +167,7 @@ export default () => {
             toggleDrawing()
             // const pos = e.target.getStage().getPointerPosition();
             const pos = getRelativePointerPosition(e.target.getStage());
-            let newSkiCut = {id: uuidv4(), line: {points: [pos.x, pos.y]}};
+            let newSkiCut = {id: uuidv4(), line: {points: [pos.x, pos.y], strokeWidth: 10}};
             let newSkiCuts = [...skiCuts, newSkiCut];
             setSkiCuts(newSkiCuts);
         }
@@ -226,9 +227,17 @@ export default () => {
     let pointLabelToEdit = pointLabel.find(x => x.star.id == editId);
     const editText = pointLabelToEdit?.label.text
 
+    let skiCutToEdit = skiCuts.find(x => x.id == editNumberId);
+    const editNumberText = skiCutToEdit?.line.strokeWidth
+
     const setEdit = (id) => {
         setEditId(id)
     }
+
+    const setEditNumber = (id) => {
+        setEditNumberId(id)
+    }
+
     const changeText = (e) => {
         let pointLabelToEdit = pointLabel.find(x => x.star.id == editId);
         pointLabelToEdit.label.text = e.target.value
@@ -236,11 +245,23 @@ export default () => {
         setPointLabels(updatedLabels)
     }
 
+    const changeNumber = (e) => {
+        let skiCutToEdit = skiCuts.find(x => x.id == editNumberId);
+        skiCutToEdit.line.strokeWidth = e.target.value
+        let updatedSkiCuts = [...skiCuts];
+        setSkiCuts(updatedSkiCuts)
+    }
+
 
     return (
         <React.Fragment>
             <h1>{mode}</h1>
-            <input type={"Text"} value={editText} onChange={changeText}/>
+            <div>
+                <label>Point Label: </label>
+                <input type={"Text"} value={editText} onChange={changeText}/></div>
+            <div>
+                <label>Ski Cut Width: </label>
+                <input type={"Number"} value={editNumberText} onChange={changeNumber}/></div>
             <div onClick={() => setMode(MODES.ADD_AVALANCHE)}>
                 Add avalanche
             </div>
@@ -286,11 +307,11 @@ export default () => {
                 {/*avalanches*/}
                 <Regions/>
 
+                {/*Ski Cuts*/}
+                <SkiCuts setEditNumber={setEditNumber}/>
+
                 {/*points*/}
                 <PointLabels setEdit={setEdit}/>
-
-                {/*Ski Cuts*/}
-                <SkiCuts/>
             </Stage>
             <div className="zoom-container">
                 <button
