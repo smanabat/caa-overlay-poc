@@ -1,7 +1,10 @@
 import React from "react";
-import { Layer, Line } from "react-konva";
+import {Layer, Line} from "react-konva";
+import bikePattern from "../assets/patterns/sushi.png"
 
 import useStore from "../store";
+import useImage from "use-image";
+
 
 export default () => {
     const regions = useStore(s => s.regions);
@@ -9,6 +12,8 @@ export default () => {
 
     const selectedId = useStore(s => s.selectedRigionId);
     const selectRegion = useStore(s => s.selectRegion);
+    const [image] = useImage(bikePattern, "Anonymous");
+
 
     return (
         <Layer ref={layerRef}>
@@ -21,7 +26,8 @@ export default () => {
                         <Line
                             globalCompositeOperation="destination-out"
                             points={region.points.flatMap(p => [p.x, p.y])}
-                            fill="black"
+                            // fillPatternImage={imageObj}
+                            // fill="black"
                             listening={false}
                             closed
                         />
@@ -29,15 +35,18 @@ export default () => {
                         <Line
                             name="region"
                             points={region.points.flatMap(p => [p.x, p.y])}
-                            fill={region.color}
+                            // fill={region.color}
+                            fillPatternImage={image}
                             closed
-                            opacity={isSelected ? 1 : 0.8}
+                            opacity={isSelected ? .5 : 0.2}
+                            draggable
                             onClick={() => {
                                 selectRegion(region.id);
                             }}
                         />
                     </React.Fragment>
-                );
+                )
+                    ;
             })}
         </Layer>
     );

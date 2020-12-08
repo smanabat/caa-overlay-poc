@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Konva from 'konva';
 import {Stage} from 'react-konva';
 import faker from 'faker'
+import { v4 as uuidv4 } from 'uuid';
 
 import Regions from './regions';
 import BaseImage from './baseImage';
@@ -165,8 +166,9 @@ export default () => {
             toggleDrawing()
             // const pos = e.target.getStage().getPointerPosition();
             const pos = getRelativePointerPosition(e.target.getStage());
-            let newSkiCut = {line: {points: [pos.x, pos.y]}};
-            setSkiCuts([...skiCuts, newSkiCut]);
+            let newSkiCut = {id: uuidv4(), line: {points: [pos.x, pos.y]}};
+            let newSkiCuts = [...skiCuts, newSkiCut];
+            setSkiCuts(newSkiCuts);
         }
     };
 
@@ -188,8 +190,6 @@ export default () => {
             if (!isDrawing) {
                 return;
             }
-            const stage = e.target.getStage();
-            // const point = stage.getPointerPosition();
             const point = getRelativePointerPosition(e.target.getStage());
 
             let lastSkiCut = skiCuts[skiCuts.length - 1];
@@ -198,7 +198,6 @@ export default () => {
             lastLine.points = lastLine.points.concat([point.x, point.y]);
 
             // replace last
-            skiCuts.splice(skiCuts)
             skiCuts.splice(skiCuts.length - 1, 1, lastSkiCut);
             setSkiCuts([...skiCuts]);
         }
@@ -211,6 +210,7 @@ export default () => {
 
         if (mode === MODES.ADD_SKI_CUT) {
             toggleDrawing()
+            setMode('');
         }
         if (mode === MODES.ADD_AVALANCHE) {
             const lastRegion = regions[regions.length - 1];

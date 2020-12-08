@@ -113,18 +113,6 @@ function App() {
     return (
         <>
             {stageRef && stageRef.current && <ReactJson src={JSON.parse(stageRef.current.toJSON())}/>}
-            <div className="left-panel">
-                Brigthess
-                <input
-                    id="slider"
-                    type="range"
-                    min="-1"
-                    max="1"
-                    step="0.05"
-                    defaultValue="0"
-                />
-                <RegionsList />
-            </div>
             <div className="right-panel">
                 <Canvas />
             </div>
