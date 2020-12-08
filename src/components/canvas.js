@@ -8,6 +8,7 @@ import BaseImage from './baseImage';
 
 import useStore from '../store';
 import {PointLabels} from "./pointLabels";
+import {SkiCuts} from "./skiCuts";
 
 let id = 1;
 
@@ -74,7 +75,8 @@ function limitAttributes(stage, newAttrs) {
 
 const MODES = Object.freeze({
     ADD_AVALANCHE: 'ADD_AVALANCHE',
-    ADD_POINT: 'ADD_POINT'
+    ADD_POINT: 'ADD_POINT',
+    ADD_SKI_CUT: 'ADD_SKI_CUT'
 })
 
 export default () => {
@@ -96,6 +98,9 @@ export default () => {
 
     const pointLabel = useStore(state => state.pointLabels);
     const setPointLabels = useStore(state => state.setPointLabels);
+
+    const skiCuts = useStore(s => s.skiCuts);
+    const setSkiCuts = useStore(s => s.setSkiCuts);
 
     const selectRegion = useStore(s => s.selectRegion);
 
@@ -154,6 +159,15 @@ export default () => {
             setPointLabels(pointLabel.concat(newPointLabel))
             setMode('')
         }
+
+
+        if (mode === MODES.ADD_SKI_CUT) {
+            toggleDrawing()
+            // const pos = e.target.getStage().getPointerPosition();
+            const pos = getRelativePointerPosition(e.target.getStage());
+            let newSkiCut = {line: {points: [pos.x, pos.y]}};
+            setSkiCuts([...skiCuts, newSkiCut]);
+        }
     };
 
     function onStageMouseMove(e) {
@@ -167,6 +181,27 @@ export default () => {
             regions.splice(regions.length - 1, 1);
             setRegions(regions.concat([lastRegion]));
         }
+
+
+        if (mode === MODES.ADD_SKI_CUT) {
+            // no drawing - skipping
+            if (!isDrawing) {
+                return;
+            }
+            const stage = e.target.getStage();
+            // const point = stage.getPointerPosition();
+            const point = getRelativePointerPosition(e.target.getStage());
+
+            let lastSkiCut = skiCuts[skiCuts.length - 1];
+            let lastLine = lastSkiCut.line;
+            // add point
+            lastLine.points = lastLine.points.concat([point.x, point.y]);
+
+            // replace last
+            skiCuts.splice(skiCuts)
+            skiCuts.splice(skiCuts.length - 1, 1, lastSkiCut);
+            setSkiCuts([...skiCuts]);
+        }
     }
 
     let onStageMouseUp = e => {
@@ -174,6 +209,9 @@ export default () => {
             return;
         }
 
+        if (mode === MODES.ADD_SKI_CUT) {
+            toggleDrawing()
+        }
         if (mode === MODES.ADD_AVALANCHE) {
             const lastRegion = regions[regions.length - 1];
             if (lastRegion.points.length < 3) {
@@ -208,6 +246,9 @@ export default () => {
             </div>
             <div onClick={() => setMode(MODES.ADD_POINT)}>
                 Add point
+            </div>
+            <div onClick={() => setMode(MODES.ADD_SKI_CUT)}>
+                Add ski cut
             </div>
             <Stage
                 ref={stageRef}
@@ -247,6 +288,9 @@ export default () => {
 
                 {/*points*/}
                 <PointLabels setEdit={setEdit}/>
+
+                {/*Ski Cuts*/}
+                <SkiCuts/>
             </Stage>
             <div className="zoom-container">
                 <button

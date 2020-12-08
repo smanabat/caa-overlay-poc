@@ -128,44 +128,6 @@ function App() {
             <div className="right-panel">
                 <Canvas />
             </div>
-            {/*<PolygonLayer ref={stageRef}/>*/}
-
-            {/*<Stage*/}
-            {/*    onMouseDown={handleClick}*/}
-            {/*    onMouseMove={handleMouseMove}*/}
-            {/*    ref={stageRef} width={window.innerWidth} height={window.innerHeight}>*/}
-            {/*    <Layer>*/}
-            {/*        <URLImage src={imgMountain} x={150}/>*/}
-            {/*    </Layer>*/}
-
-            {/*    <Layer>*/}
-            {/*        <Text text="Try to drag a star"/>*/}
-            {/*        {stars.map((star) => (*/}
-            {/*            <Star*/}
-            {/*                key={star.id}*/}
-            {/*                id={star.id}*/}
-            {/*                x={star.x}*/}
-            {/*                y={star.y}*/}
-            {/*                numPoints={10}*/}
-            {/*                innerRadius={20}*/}
-            {/*                outerRadius={40}*/}
-            {/*                fill="#89b717"*/}
-            {/*                opacity={0.8}*/}
-            {/*                draggable*/}
-            {/*                rotation={star.rotation}*/}
-            {/*                shadowColor="black"*/}
-            {/*                shadowBlur={10}*/}
-            {/*                shadowOpacity={0.6}*/}
-            {/*                shadowOffsetX={star.isDragging ? 10 : 5}*/}
-            {/*                shadowOffsetY={star.isDragging ? 10 : 5}*/}
-            {/*                scaleX={star.isDragging ? 1.2 : 1}*/}
-            {/*                scaleY={star.isDragging ? 1.2 : 1}*/}
-            {/*                onDragStart={handleDragStart}*/}
-            {/*                onDragEnd={handleDragEnd}*/}
-            {/*            />*/}
-            {/*        ))}*/}
-            {/*    </Layer>*/}
-            {/*</Stage>*/}
         </>
     );
 }

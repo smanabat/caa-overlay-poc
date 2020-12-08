@@ -3793,6 +3793,9 @@ let defaultState = (set) => ({
     // pointLabels: [],
     setPointLabels: pointLabels => set(state => ({pointLabels})),
 
+    skiCuts: [],
+    setSkiCuts: skiCuts => set(state => ({skiCuts})),
+
     selectedRigionId: null,
     selectRegion: selectedRigionId => set({selectedRigionId}),
 
